@@ -104,7 +104,7 @@ services:
 #        - /tmp:/tmp
 #       command: "--cid=111 --name=video0.i420 --width=640 --height=480"
 
- 	# Encoder for camera-opencv(vp8)
+    # Encoder for camera-opencv(vp8)
 #    video-vpx-encoder:
 #        image: chalmersrevere/opendlv-video-vpx-encoder-multi:v0.0.5
 #        restart: on-failure
@@ -162,7 +162,7 @@ services:
         - "8080:8080"
         command: "--cid=111"
         
-	# Convert video data into images.
+    # Convert video data into images.
 #	rec2csv_png:
 #        build:
 #            context: https://github.com/chalmers-revere/rec2csv-png.git
