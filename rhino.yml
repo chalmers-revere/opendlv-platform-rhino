@@ -23,14 +23,14 @@ services:
 
     # OxTS GPS (Rhino)
     dev-gps-ncom:
-        image: chalmersrevere/opendlv-device-gps-ncom-multi:v0.0.13
+        image: chalmersrevere/opendlv-device-gps-ncom-multi:v0.0.14
         restart: on-failure
         network_mode: "host"
         command: "--ncom_ip=0.0.0.0 --ncom_port=3000 --cid=111"
 
     # Velodyne VLP32c Lidar (Rhino)
     dev-lidar-vlp32c:
-       image: chalmersrevere/opendlv-device-lidar-vlp32c-multi:v0.0.1
+       image: chalmersrevere/opendlv-device-lidar-vlp32c-multi:v0.0.2
        restart: always
        network_mode: "host"
        command: "--vlp32c_ip=0.0.0.0 --vlp32c_port=2368 --cid=111 --intensity=0"
