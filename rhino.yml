@@ -36,11 +36,11 @@ services:
        command: "--vlp32c_ip=0.0.0.0 --vlp32c_port=2368 --cid=111 --intensity=0"
 
     # Volvo Angle Sensor using lab jack
-    dev-io-ue9-amd64:
-        image: olbender/opendlv-device-io-ue9-amd64:v0.0.1
-        restart: on-failure
-        network_mode: "host"
-        command: "opendlv-device-io-ue9 --ip=10.40.40.101 --cid=111 --verbose"
+#    dev-io-ue9-amd64:
+#        image: olbender/opendlv-device-io-ue9-amd64:v0.0.1
+#        restart: on-failure
+#        network_mode: "host"
+#        command: "opendlv-device-io-ue9 --ip=10.40.40.101 --cid=111 --verbose"
 
     # CAN interface to access Rhino.
     opendlv-rhino:
