@@ -26,7 +26,7 @@ services:
         image: chalmersrevere/opendlv-device-gps-ncom-multi:v0.0.14
         restart: on-failure
         network_mode: "host"
-        command: "--ncom_ip=0.0.0.0 --ncom_port=3000 --cid=111"
+        command: "--ncom_ip=0.0.0.0 --ncom_port=3000 --cid=111 --nogpstime"
 
     # Velodyne VLP32c Lidar (Rhino)
     dev-lidar-vlp32c:
