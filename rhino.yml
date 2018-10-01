@@ -23,7 +23,7 @@ services:
 
     # OxTS GPS (Rhino)
     dev-gps-ncom:
-        image: chalmersrevere/opendlv-device-gps-ncom-multi:v0.0.14
+        image: chalmersrevere/opendlv-device-gps-ncom-multi:v0.0.15
         restart: on-failure
         network_mode: "host"
         command: "--ncom_ip=0.0.0.0 --ncom_port=3000 --cid=111 --nogpstime"
@@ -72,6 +72,14 @@ services:
 #        - odsupercomponent
 #        - opendlv-rhino
 #        command: "/opt/opendlv.core/bin/opendlv-core-system-ps3controller --freq=100 --cid=111"
+
+#    dev-ps3controller:
+#        image: chalmersrevere/opendlv-device-ps3controller-multi:v0.0.2
+#        restart: on-failure
+#        network_mode: "host"
+#        devices:
+#        - "/dev/input/js0:/dev/input/js0"
+#        command: "--device=/dev/input/js0 --freq=100 --acc_min=0 --acc_max=50 --dec_min=0 --dec_max=-10 --steering_min=-10 --steering_max=10 --cid=111"
 
 ######################################################################################
 #
@@ -141,7 +149,7 @@ services:
     # Web-application for viewing vehicle data.
     vehicle-view:
         container_name: opendlv-vehicle-view
-        image: chalmersrevere/opendlv-vehicle-view-multi:v0.0.39
+        image: chalmersrevere/opendlv-vehicle-view-multi:v0.0.40
         restart: always
         network_mode: "host"
         volumes:
