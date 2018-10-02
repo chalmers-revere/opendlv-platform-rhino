@@ -62,19 +62,8 @@ services:
         - odsupercomponent
         command: "/opt/opendlv.rhino/bin/opendlv-proxy-rhino-can --freq=100 --cid=111"
 
-#    system-ps3controller-rhino:
-#        image: seresearch/opendlv-rhino-on-opendlv-on-opendlv-core-on-opendavinci-on-base:v0.1.5
-#        restart: on-failure
-#        network_mode: "host"
-#        devices:
-#        - "/dev/input/js0:/dev/input/js0"
-#        depends_on:
-#        - odsupercomponent
-#        - opendlv-rhino
-#        command: "/opt/opendlv.core/bin/opendlv-core-system-ps3controller --freq=100 --cid=111"
-
 #    dev-ps3controller:
-#        image: chalmersrevere/opendlv-device-ps3controller-multi:v0.0.2
+#        image: chalmersrevere/opendlv-device-ps3controller-multi:v0.0.5
 #        restart: on-failure
 #        network_mode: "host"
 #        devices:
