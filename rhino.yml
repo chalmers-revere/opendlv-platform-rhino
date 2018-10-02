@@ -26,14 +26,14 @@ services:
         image: chalmersrevere/opendlv-device-gps-ncom-multi:v0.0.15
         restart: on-failure
         network_mode: "host"
-        command: "--ncom_ip=0.0.0.0 --ncom_port=3000 --cid=111 --nogpstime"
+        command: "--ncom_ip=0.0.0.0 --ncom_port=3000 --cid=111"
 
     # Velodyne VLP32c Lidar (Rhino)
     dev-lidar-vlp32c:
        image: chalmersrevere/opendlv-device-lidar-vlp32c-multi:v0.0.2
        restart: always
        network_mode: "host"
-       command: "--vlp32c_ip=0.0.0.0 --vlp32c_port=2368 --cid=111 --intensity=0"
+       command: "--vlp32c_ip=0.0.0.0 --vlp32c_port=2368 --cid=111"
 
     # Accessing a video stream using OpenCV.
     dev-camera-opencv:
@@ -123,14 +123,14 @@ services:
 
     # Trimble GPS
 #    dev-gps-nmea:
-#        image: chalmersrevere/opendlv-device-gps-nmea-multi:v0.0.7
+#        image: chalmersrevere/opendlv-device-gps-nmea-multi:v0.0.8
 #        restart: on-failure
 #        network_mode: "host"
 #        command: "--nmea_ip=10.42.42.112 --nmea_port=9999 --cid=111"
 
     # Velodyne VLP16 Lidar
 #    dev-lidar-vlp16c:
-#        image: chalmersrevere/opendlv-device-lidar-vlp16-multi:v0.0.8
+#        image: chalmersrevere/opendlv-device-lidar-vlp16-multi:v0.0.9
 #        restart: on-failure
 #        network_mode: "host"
 #        command: "--vlp16_ip=0.0.0.0 --vlp16_port=2368 --cid=111"
