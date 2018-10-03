@@ -63,7 +63,7 @@ services:
         command: "/opt/opendlv.rhino/bin/opendlv-proxy-rhino-can --freq=100 --cid=111"
 
 #    dev-ps3controller:
-#        image: chalmersrevere/opendlv-device-ps3controller-multi:v0.0.6
+#        image: chalmersrevere/opendlv-device-ps3controller-multi:v0.0.7
 #        restart: on-failure
 #        network_mode: "host"
 #        devices:
