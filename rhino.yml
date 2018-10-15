@@ -60,7 +60,7 @@ services:
         privileged: true
         depends_on:
         - odsupercomponent
-        command: "/opt/opendlv.rhino/bin/opendlv-proxy-rhino-can --freq=100 --cid=111"
+        command: "/opt/opendlv.rhino/bin/opendlv-proxy-rhino-can --freq=100 --cid=111 --id=1"
 
 #    dev-ps3controller:
 #        container_name: dev-ps3controller
