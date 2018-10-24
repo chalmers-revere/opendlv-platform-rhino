@@ -78,7 +78,7 @@ services:
 #        network_mode: "host"
 #        devices:
 #        - "/dev/input/js0:/dev/input/js0"
-#        command: "--device=/dev/input/js0 --axis_leftright=0 --axis_updown=5 --freq=100 --acc_min=0 --acc_max=50 --dec_min=0 --dec_max=-10 --steering_min=-10 --steering_max=10 --steering_max_rate=5.0 --cid=111"
+#        command: "--device=/dev/input/js0 --axis_leftright=0 --axis_updown=4 --freq=100 --acc_min=0 --acc_max=50 --dec_min=0 --dec_max=-10 --steering_min=-10 --steering_max=10 --steering_max_rate=5.0 --cid=111"
 
 ######################################################################################
 #
@@ -148,7 +148,7 @@ services:
     # Web-application for viewing vehicle data.
     vehicle-view:
         container_name: opendlv-vehicle-view
-        image: chalmersrevere/opendlv-vehicle-view-multi:v0.0.42
+        image: chalmersrevere/opendlv-vehicle-view-multi:v0.0.43
         restart: always
         network_mode: "host"
         volumes:
