@@ -23,6 +23,7 @@ services:
 
     # OxTS GPS
     dev-gps-ncom:
+        container name: dev-gps-ncom
         image: chalmersrevere/opendlv-device-gps-ncom-multi:v0.0.15
         restart: on-failure
         network_mode: "host"
@@ -30,6 +31,7 @@ services:
 
     # Velodyne VLP32c Lidar
     dev-lidar-vlp32c:
+       container name: dev-lidar-vlp32c
        image: chalmersrevere/opendlv-device-lidar-vlp32c-multi:v0.0.2
        restart: always
        network_mode: "host"
@@ -37,6 +39,7 @@ services:
 
     # Accessing a video stream using OpenCV.
 #    dev-camera-opencv:
+#        container name: dev-camera-opencv
 #        image: chalmersrevere/opendlv-device-camera-opencv-multi:v0.0.10
 #        restart: always
 #        ipc: "host"
@@ -48,6 +51,7 @@ services:
     # Encoder for camera-opencv(x264)
     # x264(for research) has the better performance;
 #    video-x264-encoder-amd64:
+#        container name: video-x264-encoder-amd64
 #        build:
 #            context: https://github.com/chalmers-revere/opendlv-video-x264-encoder.git
 #            dockerfile: Dockerfile.amd64
@@ -60,6 +64,7 @@ services:
 
     # Volvo Angle Sensor using lab jack
 #    dev-io-ue9-amd64:
+#        container name: dev-io-ue9-amd64
 #        image: olbender/opendlv-device-io-ue9-amd64:v0.0.1
 #        restart: on-failure
 #        network_mode: "host"
@@ -67,6 +72,7 @@ services:
 
     # CAN interface to access Rhino.
     opendlv-rhino:
+        container name: opendlv-rhino
         image: seresearch/opendlv-rhino-on-opendlv-on-opendlv-core-on-opendavinci-on-base:v0.1.5
         restart: on-failure
         network_mode: "host"
@@ -113,13 +119,14 @@ services:
         - "8081:8081"
        
     # Web-application for viewing signals.
-    signal-viewer:
-        image: chalmersrevere/opendlv-signal-viewer-multi:v0.0.8
-        restart: always
-        network_mode: "host"
-        ports:
-        - "8080:8080"
-        command: "--cid=111"
+#   signal-viewer:
+#        container name: signal-viewer
+#        image: chalmersrevere/opendlv-signal-viewer-multi:v0.0.8
+#        restart: always
+#        network_mode: "host"
+#        ports:
+#        - "8080:8080"
+#        command: "--cid=111"
 
 ######################################################################################
 #
@@ -129,6 +136,7 @@ services:
 
     # Encoder for camera-opencv(h264) for industrial applications
 #    video-h264-encoder-amd64:
+#        container name: video-h264-encoder-amd64
 #        build:
 #           context: https://github.com/chalmers-revere/opendlv-video-h264-encoder.git
 #            dockerfile: Dockerfile.amd64
@@ -141,6 +149,7 @@ services:
 
     # Encoder for camera-opencv(vp8)
 #    video-vpx-encoder:
+#        container name: video-vpx-encoder 
 #        image: chalmersrevere/opendlv-video-vpx-encoder-multi:v0.0.5
 #        restart: on-failure
 #        network_mode: "host"
@@ -151,6 +160,7 @@ services:
 
     # Accessing a video stream from Video4Linux-supported cameras.
 #    dev-camera-v4l:
+#        container name: dev-camera-v4l
 #        image: chalmersrevere/opendlv-device-camera-v4l-multi:v0.0.6
 #        restart: always
 #        ipc: "host"
@@ -161,6 +171,7 @@ services:
 
     # Trimble GPS
 #    dev-gps-nmea:
+#        container name: dev-gps-nmea
 #        image: chalmersrevere/opendlv-device-gps-nmea-multi:v0.0.9
 #        restart: on-failure
 #        network_mode: "host"
@@ -168,6 +179,7 @@ services:
 
     # Velodyne VLP16 Lidar
 #    dev-lidar-vlp16c:
+#        container name: dev-lidar-vlp16c
 #        image: chalmersrevere/opendlv-device-lidar-vlp16-multi:v0.0.9
 #        restart: on-failure
 #        network_mode: "host"
@@ -175,6 +187,7 @@ services:
         
     # Convert video data into images.
 #	rec2csv_png:
+#        container name: rec2csv_png
 #        build:
 #            context: https://github.com/chalmers-revere/rec2csv-png.git
 #            dockerfile: Dockerfile.amd64
