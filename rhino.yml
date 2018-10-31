@@ -13,7 +13,7 @@ services:
         network_mode: "host"
         volumes:
         - .:/opt/opendlv.data
-        command: "/opt/od4/bin/odsupercomponent --configuration=/opt/opendlv.data/configuration --cid=111"
+        command: "/opt/od4/bin/odsupercomponent --configuration=/opt/opendlv.data/configuration --cid=100"
 
 ######################################################################################
 #
@@ -27,7 +27,7 @@ services:
         image: chalmersrevere/opendlv-device-gps-ncom-multi:v0.0.15
         restart: on-failure
         network_mode: "host"
-        command: "--ncom_ip=0.0.0.0 --ncom_port=3000 --cid=111"
+        command: "--ncom_ip=0.0.0.0 --ncom_port=3000 --cid=100"
 
     # Velodyne VLP32c Lidar
     dev-lidar-vlp32c:
@@ -35,7 +35,7 @@ services:
        image: chalmersrevere/opendlv-device-lidar-vlp32c-multi:v0.0.2
        restart: always
        network_mode: "host"
-       command: "--vlp32c_ip=0.0.0.0 --vlp32c_port=2368 --cid=111"
+       command: "--vlp32c_ip=0.0.0.0 --vlp32c_port=2368 --cid=100"
 
     # Accessing a video stream using OpenCV.
 #    dev-camera-opencv:
@@ -60,7 +60,7 @@ services:
 #        ipc: "host"
 #        volumes:
 #        - /tmp:/tmp
-#        command: "--cid=111 --name=video0.i420 --width=640 --height=480"
+#        command: "--cid=100 --name=video0.i420 --width=640 --height=480"
 
     # Volvo Angle Sensor using lab jack
 #    dev-io-ue9-amd64:
@@ -68,7 +68,7 @@ services:
 #        image: olbender/opendlv-device-io-ue9-amd64:v0.0.1
 #        restart: on-failure
 #        network_mode: "host"
-#        command: "opendlv-device-io-ue9 --ip=10.40.40.101 --cid=111 --verbose"
+#        command: "opendlv-device-io-ue9 --ip=10.40.40.101 --cid=100 --verbose"
 
     # CAN interface to access Rhino.
     opendlv-rhino:
@@ -79,7 +79,7 @@ services:
         privileged: true
         depends_on:
         - odsupercomponent
-        command: "/opt/opendlv.rhino/bin/opendlv-proxy-rhino-can --freq=100 --cid=111 --id=1"
+        command: "/opt/opendlv.rhino/bin/opendlv-proxy-rhino-can --freq=100 --cid=100 --id=1"
     
     # PS3 controller
 #    dev-ps3controller:
@@ -89,7 +89,7 @@ services:
 #        network_mode: "host"
 #        devices:
 #        - "/dev/input/js0:/dev/input/js0"
-#        command: "--device=/dev/input/js0 --axis_leftright=0 --axis_updown=4 --freq=100 --acc_min=0 --acc_max=50 --dec_min=0 --dec_max=-10 --steering_min=-10 --steering_max=10 --steering_max_rate=2.0 --cid=111"
+#        command: "--device=/dev/input/js0 --axis_leftright=0 --axis_updown=4 --freq=100 --acc_min=0 --acc_max=50 --dec_min=0 --dec_max=-10 --steering_min=-10 --steering_max=10 --steering_max_rate=2.0 --cid=100"
 
     # PS4 controller 
 #    dev-ps4controller:
@@ -99,7 +99,7 @@ services:
 #        network_mode: "host"
 #        devices:
 #        - "/dev/input/js0:/dev/input/js0"
-#        command: "--device=/dev/input/js0 --axis_leftright=0 --axis_updown=4 --freq=100 --acc_min=0 --acc_max=50 --dec_min=0 --dec_max=-10 --steering_min=-10 --steering_max=10 --steering_max_rate=5.0 --cid=111"
+#        command: "--device=/dev/input/js0 --axis_leftright=0 --axis_updown=4 --freq=100 --acc_min=0 --acc_max=50 --dec_min=0 --dec_max=-10 --steering_min=-10 --steering_max=10 --steering_max_rate=5.0 --cid=100"
 
 ######## NOTE: To make steering sluggish, reduce steering_max_rate i.e. 0 < steering_max_rate < 2  
 
@@ -113,7 +113,7 @@ services:
         - ~/recordings:/opt/vehicle-view/recordings
         - /var/run/docker.sock:/var/run/docker.sock
         environment:
-        - OD4SESSION_CID=111
+        - OD4SESSION_CID=100
         - OPENDLV_VEHICLE_VIEW_PLATFORM=Rhino        
         ports:
         - "8081:8081"
@@ -135,7 +135,7 @@ services:
 #        ipc: "host"
 #        volumes:
 #        - /tmp:/tmp
-#       command: "--cid=111 --name=video0.i420 --width=640 --height=480"
+#       command: "--cid=100 --name=video0.i420 --width=640 --height=480"
 
     # Encoder for camera-opencv(vp8)
 #    video-vpx-encoder:
@@ -146,7 +146,7 @@ services:
 #        ipc: "host"
 #        volumes:
 #        - /tmp:/tmp
-#        command: "--cid=111 --name=video0.i420 --width=640 --height=480 --vp8"
+#        command: "--cid=100 --name=video0.i420 --width=640 --height=480 --vp8"
 
     # Accessing a video stream from Video4Linux-supported cameras.
 #    dev-camera-v4l:
@@ -165,7 +165,7 @@ services:
 #        image: chalmersrevere/opendlv-device-gps-nmea-multi:v0.0.9
 #        restart: on-failure
 #        network_mode: "host"
-#        command: "--nmea_ip=10.42.42.23 --nmea_port=9999 --cid=111"
+#        command: "--nmea_ip=10.42.42.23 --nmea_port=9999 --cid=100"
 
     # Velodyne VLP16 Lidar
 #    dev-lidar-vlp16c:
@@ -173,7 +173,7 @@ services:
 #        image: chalmersrevere/opendlv-device-lidar-vlp16-multi:v0.0.9
 #        restart: on-failure
 #        network_mode: "host"
-#        command: "--vlp16_ip=0.0.0.0 --vlp16_port=2368 --cid=111"
+#        command: "--vlp16_ip=0.0.0.0 --vlp16_port=2368 --cid=100"
         
     # Convert video data into images.
 #	 rec2csv_png:
