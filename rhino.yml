@@ -21,7 +21,7 @@ services:
 #
 ######################################################################################
 
-    # OxTS GPS
+    # OxTS GPS (10.40.40.56)
     dev-gps-ncom:
         container_name: dev-gps-ncom
         image: chalmersrevere/opendlv-device-gps-ncom-multi:v0.0.15
@@ -29,7 +29,7 @@ services:
         network_mode: "host"
         command: "--ncom_ip=0.0.0.0 --ncom_port=3000 --cid=100"
 
-    # Velodyne VLP32c Lidar
+    # Velodyne VLP32c Lidar (10.40.40.30)
     dev-lidar-vlp32c:
        container_name: dev-lidar-vlp32c
        image: chalmersrevere/opendlv-device-lidar-vlp32c-multi:v0.0.2
@@ -37,7 +37,7 @@ services:
        network_mode: "host"
        command: "--vlp32c_ip=0.0.0.0 --vlp32c_port=2368 --cid=100"
 
-    # Accessing a video stream using OpenCV.
+    # Accessing a video stream using OpenCV (Axis 10.40.40.29)
 #    dev-camera-opencv:
 #        container_name: dev-camera-opencv
 #        image: chalmersrevere/opendlv-device-camera-opencv-multi:v0.0.10
