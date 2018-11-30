@@ -68,7 +68,7 @@ services:
 #        image: olbender/opendlv-device-io-ue9-amd64:v0.0.1
 #        restart: on-failure
 #        network_mode: "host"
-#        command: "opendlv-device-io-ue9 --ip=10.40.40.23 --cid=100 --verbose"
+#        command: "opendlv-device-io-ue9 --ip=10.40.40.101 --cid=100 --verbose"
 
     # CAN interface to access Rhino.
     opendlv-rhino:
