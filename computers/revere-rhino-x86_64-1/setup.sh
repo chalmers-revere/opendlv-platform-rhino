@@ -28,12 +28,15 @@ sed -i "$sed_arg" install-conf.sh
 
 sed_arg="s/subnet=.*/subnet=10.40.40.0/; \
 	s/dhcp_clients=.*/dhcp_clients=( \
-	  'axis-m1124-0,ac:cc:8e:84:80:3c,50', \
-	  'velodyne-hdl32e-0,60:76:88:20:20:01,70', \
-	  'cisco-ie2000_16p-0,f8:7b:20:d2:fe:40,100', \
-	  'meinberg-m500-0_0,ec:46:70:00:99:eb,105', \
-	  'meinberg-m500-0_1,00:13:95:1d:f4:b6,106', \
-	  'applanix-pos_lv,00:17:47:20:0d:58,80', )/"
+	  'revere-rhino-x86_64-2,00:24:9b:15:4a:ea,40",
+	  'axis-m1124-0,ac:cc:8e:23:6e:8d,50', \
+	  'velodyne-vlp32c-0,60:76:88:34:34:4d,70', \
+	  'cisco-ie2000_16p-0,00:5d:73:67:a5:40,100', \
+	  'cisco-ie2000_16p-1,6c:dd:30:b9:a2:c0,101', \
+	  'cisco-ie2000_8p-0,ec:bd:1d:c1:93:40,102', \
+	  'meinberg-m500-0_0,ec:46:70:00:7f:86,105', \
+	  'meinberg-m500-0_1,00:13:95:19:ea:a6,106', \
+	  'oxts-gps,70:b3:d5:af:03:73,80', )/"
 sed -i "$sed_arg" setup-post-01-router.sh
 
 sed_arg="s/dev=.*/dev=( can0 )/; \
