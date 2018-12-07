@@ -29,7 +29,7 @@ sed -i "$sed_arg" install-conf.sh
 
 sed_arg="s/subnet=.*/subnet=10.40.40.0/; \
 	s/dhcp_clients=.*/dhcp_clients=( \
-	  'revere-rhino-x86_64-2,00:24:9b:15:4a:ea,40",
+	  'revere-rhino-x86_64-2,00:24:9b:15:4a:ea,40',
 	  'axis-m1124-0,ac:cc:8e:23:6e:8d,50', \
 	  'velodyne-vlp32c-0,60:76:88:34:34:4d,70', \
 	  'cisco-ie2000_16p-0,00:5d:73:67:a5:40,100', \
