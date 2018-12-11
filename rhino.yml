@@ -32,7 +32,7 @@ services:
     # Velodyne VLP32c Lidar (10.40.40.30)
     dev-lidar-vlp32c:
        container_name: dev-lidar-vlp32c
-       image: chalmersrevere/opendlv-device-lidar-vlp32c-multi:v0.0.2
+       image: chalmersrevere/opendlv-device-lidar-vlp32c-multi:v0.0.3
        restart: always
        network_mode: "host"
        command: "--vlp32c_ip=0.0.0.0 --vlp32c_port=2368 --cid=100"
