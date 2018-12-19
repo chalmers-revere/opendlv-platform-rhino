@@ -8,12 +8,16 @@ services:
 ################################################################################
 
     odsupercomponent:
+        container_name: odsupercomponent
         image: seresearch/opendlv-rhino-on-opendlv-on-opendlv-core-on-opendavinci-on-base:v0.1.5
         restart: on-failure
         network_mode: "host"
         volumes:
         - .:/opt/opendlv.data
-        command: "/opt/od4/bin/odsupercomponent --configuration=/opt/opendlv.data/configuration --cid=100"
+        cap_add:
+        - SYS_NICE
+        entrypoint: ""
+        command: "nice -n 0 /opt/od4/bin/odsupercomponent --configuration=/opt/opendlv.data/configuration --cid=110"
 
 ######################################################################################
 #
@@ -31,11 +35,14 @@ services:
 
     # Velodyne VLP32c Lidar (10.40.40.30)
     dev-lidar-vlp32c:
-       container_name: dev-lidar-vlp32c
-       image: chalmersrevere/opendlv-device-lidar-vlp32c-multi:v0.0.3
-       restart: always
-       network_mode: "host"
-       command: "--vlp32c_ip=0.0.0.0 --vlp32c_port=2368 --cid=100"
+        container_name: dev-lidar-vlp32c
+        image: chalmersrevere/opendlv-device-lidar-vlp32c-multi:v0.0.3
+        restart: always
+        network_mode: "host"
+        cap_add:
+        - SYS_NICE
+        entrypoint: ""
+        command: "nice -n -7 /usr/bin/opendlv-device-lidar-vlp32c --vlp32c_ip=0.0.0.0 --vlp32c_port=2368 --cid=100"
 
     # Accessing a video stream using OpenCV (Axis 10.40.40.29)
     dev-camera-opencv:
@@ -44,9 +51,14 @@ services:
         restart: always
         ipc: "host"
         network_mode: "host"
+        environment:
+        - CLUON_SHAREDMEMORY_POSIX=1
         volumes:
         - /tmp:/tmp
-        command: "--camera=http://root:axiscamera@10.40.40.29/axis-cgi/mjpg/video.cgi\\?channel=0\\&.mjpg --width=640 --height=480 --freq=20 --name.i420=video0.i420 --name.argb=video0.argb"
+        cap_add:
+        - SYS_NICE
+        entrypoint: ""
+        command: "nice -n -5 /usr/bin/opendlv-device-camera-opencv --camera=http://root:axiscamera@10.40.40.29/axis-cgi/mjpg/video.cgi\\?channel=0\\&.mjpg --width=640 --height=480 --freq=20 --name.i420=video0.i420 --name.argb=video0.argb"
 
     # Encoder for camera-opencv(x264)
     # x264(for research) has the better performance;
@@ -55,12 +67,17 @@ services:
         build:
             context: https://github.com/chalmers-revere/opendlv-video-x264-encoder.git
             dockerfile: Dockerfile.amd64
-        restart: on-failure
+        restart: always
         network_mode: "host"
         ipc: "host"
+        environment:
+        - CLUON_SHAREDMEMORY_POSIX=1
         volumes:
         - /tmp:/tmp
-        command: "--cid=100 --name=video0.i420 --width=640 --height=480"
+        cap_add:
+        - SYS_NICE
+        entrypoint: ""
+        command: "nice -n -10 /usr/bin/opendlv-video-x264-encoder --cid=100 --name=video0.i420 --width=640 --height=480"
 
     # Volvo Angle Sensor using lab jack
 #    dev-io-ue9-amd64:
@@ -79,7 +96,10 @@ services:
         privileged: true
         depends_on:
         - odsupercomponent
-        command: "/opt/opendlv.rhino/bin/opendlv-proxy-rhino-can --freq=100 --cid=100 --id=1"
+        cap_add:
+        - SYS_NICE
+        entrypoint: ""
+        command: "nice -n -1 /opt/opendlv.rhino/bin/opendlv-proxy-rhino-can --freq=100 --cid=100 --id=1"
     
     # PS3 controller
 #    dev-ps3controller:
@@ -118,6 +138,10 @@ services:
         - OPENDLV_VEHICLE_VIEW_PLATFORM=Rhino        
         ports:
         - "8081:8081"
+        cap_add:
+        - SYS_NICE
+        entrypoint: ""
+        command: "nice -n -15 node index.js"
 
 ######################################################################################
 #
@@ -129,14 +153,17 @@ services:
 #    video-h264-encoder-amd64:
 #        container_name: video-h264-encoder-amd64
 #        build:
-#           context: https://github.com/chalmers-revere/opendlv-video-h264-encoder.git
+#            context: https://github.com/chalmers-revere/opendlv-video-h264-encoder.git
 #            dockerfile: Dockerfile.amd64
 #        restart: on-failure
 #        network_mode: "host"
 #        ipc: "host"
 #        volumes:
 #        - /tmp:/tmp
-#       command: "--cid=100 --name=video0.i420 --width=640 --height=480"
+#        cap_add:
+#        - SYS_NICE
+#        entrypoint: ""
+#        command: "--cid=100 --name=video0.i420 --width=640 --height=480"
 
     # Encoder for camera-opencv(vp8)
 #    video-vpx-encoder:
@@ -147,7 +174,10 @@ services:
 #        ipc: "host"
 #        volumes:
 #        - /tmp:/tmp
-#        command: "--cid=100 --name=video0.i420 --width=640 --height=480 --vp8"
+#        cap_add:
+#        - SYS_NICE
+#        entrypoint: ""
+#        command: "nice -n -10 /usr/bin/opendlv-video-vpx-encoder --cid=100 --name=video0.i420 --width=640 --height=480 --vp8"
 
     # Accessing a video stream from Video4Linux-supported cameras.
 #    dev-camera-v4l:
@@ -158,15 +188,21 @@ services:
 #        network_mode: "host"
 #        volumes:
 #        - /tmp:/tmp
-#        command: "--camera=/dev/video0 --width=640 --height=480 --freq=20"
+#        cap_add:
+#        - SYS_NICE
+#        entrypoint: ""
+#        command: "nice -n -5 /usr/bin/opendlv-device-camera-v4l --camera=/dev/video0 --width=640 --height=480 --freq=20"
 
-    # Trimble GPS
+    # Trimble GPS (check IP)
 #    dev-gps-nmea:
 #        container_name: dev-gps-nmea
 #        image: chalmersrevere/opendlv-device-gps-nmea-multi:v0.0.13
 #        restart: on-failure
 #        network_mode: "host"
-#        command: "--nmea_ip=10.42.42.23 --nmea_port=9999 --cid=100"
+#        cap_add:
+#        - SYS_NICE
+#        entrypoint: ""
+#        command: "nice -n -3 /usr/bin/opendlv-device-gps-nmea --nmea_ip=10.42.42.23 --nmea_port=9999 --cid=110"    
 
     # Velodyne VLP16 Lidar
 #    dev-lidar-vlp16c:
