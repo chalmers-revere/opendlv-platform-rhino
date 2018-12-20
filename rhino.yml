@@ -17,7 +17,7 @@ services:
         cap_add:
         - SYS_NICE
         entrypoint: ""
-         command: "nice -n 0 /opt/od4/bin/odsupercomponent --configuration=/opt/opendlv.data/configuration --cid=100"
+        command: "nice -n 0 /opt/od4/bin/odsupercomponent --configuration=/opt/opendlv.data/configuration --cid=100"
 
 ######################################################################################
 #
@@ -162,9 +162,9 @@ services:
 #        - /tmp:/tmp
 #        cap_add:
 #        - SYS_NICE
-#       environment:
-#       - CLUON_SHAREDMEMORY_POSIX=0
-#       entrypoint: ""
+#        environment:
+#        - CLUON_SHAREDMEMORY_POSIX=0
+#        entrypoint: ""
 #        command: "--cid=100 --name=video0.i420 --width=640 --height=480"
 
     # Encoder for camera-opencv(vp8)
@@ -206,7 +206,7 @@ services:
 #        cap_add:
 #        - SYS_NICE
 #        entrypoint: ""
-#        command: "nice -n -3 /usr/bin/opendlv-device-gps-nmea --nmea_ip=10.40.40.X --nmea_port=9999 --cid=110"    
+#        command: "nice -n -3 /usr/bin/opendlv-device-gps-nmea --nmea_ip=10.40.40.X --nmea_port=9999 --cid=100"    
 
     # Velodyne VLP16 Lidar
 #    dev-lidar-vlp16c:
