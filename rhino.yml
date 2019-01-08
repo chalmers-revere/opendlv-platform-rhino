@@ -47,7 +47,7 @@ services:
     # Accessing a video stream using OpenCV (Axis 10.40.40.29)
     dev-camera-opencv:
         container_name: dev-camera-opencv
-        image: chalmersrevere/opendlv-device-camera-opencv-multi:v0.0.10
+        image: chalmersrevere/opendlv-device-camera-opencv-multi:v0.0.11
         restart: always
         ipc: "host"
         network_mode: "host"
@@ -126,7 +126,7 @@ services:
     # Web-application for viewing vehicle data.
     vehicle-view:
         container_name: opendlv-vehicle-view
-        image: chalmersrevere/opendlv-vehicle-view-multi:v0.0.53
+        image: chalmersrevere/opendlv-vehicle-view-multi:v0.0.54
         restart: always
         network_mode: "host"
         volumes:
@@ -186,7 +186,7 @@ services:
     # Accessing a video stream from Video4Linux-supported cameras.
 #    dev-camera-v4l:
 #        container_name: dev-camera-v4l
-#        image: chalmersrevere/opendlv-device-camera-v4l-multi:v0.0.6
+#        image: chalmersrevere/opendlv-device-camera-v4l-multi:v0.0.8
 #        restart: always
 #        ipc: "host"
 #        network_mode: "host"
@@ -211,7 +211,7 @@ services:
     # Velodyne VLP16 Lidar
 #    dev-lidar-vlp16c:
 #        container_name: dev-lidar-vlp16c
-#        image: chalmersrevere/opendlv-device-lidar-vlp16-multi:v0.0.9
+#        image: chalmersrevere/opendlv-device-lidar-vlp16-multi:v0.0.10
 #        restart: on-failure
 #        network_mode: "host"
 #        command: "--vlp16_ip=0.0.0.0 --vlp16_port=2368 --cid=100"
