@@ -31,7 +31,7 @@ services:
         image: chalmersrevere/opendlv-device-gps-ncom-multi:v0.0.15
         restart: on-failure
         network_mode: "host"
-        command: "--ncom_ip=0.0.0.0 --ncom_port=3000 --cid=100"
+        command: "--ncom_ip=0.0.0.0 --ncom_port=3000 --cid=100 --id=0"
 
     # Velodyne VLP32c Lidar (10.40.40.30)
     dev-lidar-vlp32c:
@@ -99,7 +99,7 @@ services:
         cap_add:
         - SYS_NICE
         entrypoint: ""
-        command: "nice -n -1 /opt/opendlv.rhino/bin/opendlv-proxy-rhino-can --freq=100 --cid=100 --id=1"
+        command: "nice -n -1 /opt/opendlv.rhino/bin/opendlv-proxy-rhino-can --freq=100 --cid=100"
     
     # PS3 controller
 #    dev-ps3controller:
@@ -126,7 +126,7 @@ services:
     # Web-application for viewing vehicle data.
     vehicle-view:
         container_name: opendlv-vehicle-view
-        image: chalmersrevere/opendlv-vehicle-view-multi:v0.0.54
+        image: chalmersrevere/opendlv-vehicle-view-multi:v0.0.56
         restart: always
         network_mode: "host"
         volumes:
@@ -206,7 +206,7 @@ services:
 #        cap_add:
 #        - SYS_NICE
 #        entrypoint: ""
-#        command: "nice -n -3 /usr/bin/opendlv-device-gps-nmea --nmea_ip=10.40.40.X --nmea_port=9999 --cid=100"    
+#        command: "nice -n -3 /usr/bin/opendlv-device-gps-nmea --nmea_ip=10.40.40.X --nmea_port=9999 --cid=100 --id=1"    
 
     # Velodyne VLP16 Lidar
 #    dev-lidar-vlp16c:
