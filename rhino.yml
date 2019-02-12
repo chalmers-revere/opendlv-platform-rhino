@@ -101,6 +101,14 @@ services:
         entrypoint: ""
         command: "nice -n -1 /opt/opendlv.rhino/bin/opendlv-proxy-rhino-can --freq=100 --cid=100"
     
+#    opendlv-cangw-rhino:
+#        container_name: opendlv-cangw-rhino
+#        image: chalmersrevere/opendlv-device-cangw-rhino-amd64:v0.0.5
+#        restart: on-failure
+#        network_mode: "host"
+#        privileged: true
+#        command: "--cid=100 --can=can0 --enablethrottle --enablebrake --enablesteering"
+        
     # PS3 controller
 #    dev-ps3controller:
 #        container_name: dev-ps3controller
@@ -126,7 +134,7 @@ services:
     # Web-application for viewing vehicle data.
     vehicle-view:
         container_name: opendlv-vehicle-view
-        image: chalmersrevere/opendlv-vehicle-view-multi:v0.0.56
+        image: chalmersrevere/opendlv-vehicle-view-multi:v0.0.57
         restart: always
         network_mode: "host"
         volumes:
