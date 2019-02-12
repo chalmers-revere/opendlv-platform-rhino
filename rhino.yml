@@ -87,27 +87,17 @@ services:
 #        network_mode: "host"
 #        command: "opendlv-device-io-ue9 --ip=10.40.40.101 --cid=100 --verbose"
 
-    # CAN interface to access Rhino.
-    opendlv-rhino:
-        container_name: opendlv-rhino
-        image: seresearch/opendlv-rhino-on-opendlv-on-opendlv-core-on-opendavinci-on-base:v0.1.5
+    # CAN interface to access Rhino.    
+    opendlv-cangw-rhino:
+        container_name: opendlv-cangw-rhino
+        image: chalmersrevere/opendlv-device-cangw-rhino-amd64:v0.0.5
         restart: on-failure
         network_mode: "host"
         privileged: true
-        depends_on:
-        - odsupercomponent
-        cap_add:
-        - SYS_NICE
-        entrypoint: ""
-        command: "nice -n -1 /opt/opendlv.rhino/bin/opendlv-proxy-rhino-can --freq=100 --cid=100"
-    
-#    opendlv-cangw-rhino:
-#        container_name: opendlv-cangw-rhino
-#        image: chalmersrevere/opendlv-device-cangw-rhino-amd64:v0.0.5
-#        restart: on-failure
-#        network_mode: "host"
-#        privileged: true
-#        command: "--cid=100 --can=can0 --enablethrottle --enablebrake --enablesteering"
+         cap_add:
+         - SYS_NICE
+         entrypoint:""
+        command: "nice -n -1 --cid=100 --can=can0 --enablethrottle --enablebrake --enablesteering"
         
     # PS3 controller
 #    dev-ps3controller:
