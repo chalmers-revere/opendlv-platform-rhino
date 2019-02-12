@@ -94,9 +94,9 @@ services:
         restart: on-failure
         network_mode: "host"
         privileged: true
-         cap_add:
-         - SYS_NICE
-         entrypoint:""
+        cap_add:
+        - SYS_NICE
+        entrypoint:""
         command: "nice -n -1 --cid=100 --can=can0 --enablethrottle --enablebrake --enablesteering"
         
     # PS3 controller
