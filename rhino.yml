@@ -28,7 +28,7 @@ services:
     # OxTS GPS (10.40.40.56)
     dev-gps-ncom:
         container_name: dev-gps-ncom
-        image: chalmersrevere/opendlv-device-gps-ncom-multi:v0.0.15
+        image: chalmersrevere/opendlv-device-gps-ncom-multi:v0.0.16
         restart: on-failure
         network_mode: "host"
         command: "--ncom_ip=0.0.0.0 --ncom_port=3000 --cid=100 --id=0"
