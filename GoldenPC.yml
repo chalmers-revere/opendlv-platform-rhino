@@ -69,41 +69,41 @@ services:
         command: "nice -n -5 /usr/bin/opendlv-device-lidar-vlp32c --vlp32c_ip=10.40.40.1 --vlp32c_port=2368 --gpstime --cid=101"
 
     # Axis camera including recording functionality with remote start/stop.
-    dev-camera-axis-out:
-        container_name: dev-camera-axis-out
-        image: chalmersrevere/opendlv-device-camera-mjpegoverhttp-multi:v0.0.2
-        cpuset: "2"
-        restart: always
-        ipc: "host"
-        network_mode: "host"
-        environment:
-        - DISPLAY=$DISPLAY
-        volumes:
-        - /tmp:/tmp
-        - $HOME/recordings:/recordings
-        working_dir: /recordings
-        cap_add:
-        - SYS_NICE
-        entrypoint: ""
-        command: "nice -n -8 /usr/bin/opendlv-device-camera-mjpegoverhttp --url=http://10.40.41.50/axis-cgi/mjpg/video.cgi\\?channel=0\\&.mjpg --width=1280 --height=720 --name.i420=axis-out.i420 --name.argb=axis-out.argb --remote --recsuffix=-axis-out-jpeg --cid=101 --id=0"
+#    dev-camera-axis-out:
+#        container_name: dev-camera-axis-out
+#        image: chalmersrevere/opendlv-device-camera-mjpegoverhttp-multi:v0.0.2
+#        cpuset: "2"
+#        restart: always
+#        ipc: "host"
+#        network_mode: "host"
+#        environment:
+#        - DISPLAY=$DISPLAY
+#        volumes:
+#        - /tmp:/tmp
+#        - $HOME/recordings:/recordings
+#        working_dir: /recordings
+#        cap_add:
+#        - SYS_NICE
+#        entrypoint: ""
+#        command: "nice -n -8 /usr/bin/opendlv-device-camera-mjpegoverhttp --url=http://10.40.41.50/axis-cgi/mjpg/video.cgi\\?channel=0\\&.mjpg --width=1280 --height=720 --name.i420=axis-out.i420 --name.argb=axis-out.argb --remote --recsuffix=-axis-out-jpeg --cid=101 --id=0"
 
-    qsv-h264-thumbnail-axis-out:
-        container_name: qsv-h264-thumbnail-axis-out
-        image: chrberger/video-qsv-h264-encoder:v0.0.4
-        depends_on:
-        - dev-camera-axis-out
-        cpuset: "2"
-        devices:
-        - /dev/dri/renderD128
-        restart: always
-        network_mode: "host"
-        ipc: "host"
-        volumes:
-        - /tmp:/tmp
-        cap_add:
-        - SYS_NICE
-        entrypoint: ""
-        command: "nice -n -7 /usr/bin/video-qsv-h264-encoder --cid=100 --name=axis-out.i420 --width=1280 --height=720 --id=0 --bitrate=3000 --crop.x=320 --crop.y=120 --crop.width=640 --crop.height=480 --downsample=3"
+#    qsv-h264-thumbnail-axis-out:
+#        container_name: qsv-h264-thumbnail-axis-out
+#        image: chrberger/video-qsv-h264-encoder:v0.0.4
+#        depends_on:
+#        - dev-camera-axis-out
+#        cpuset: "2"
+#        devices:
+#        - /dev/dri/renderD128
+#        restart: always
+#        network_mode: "host"
+#        ipc: "host"
+#        volumes:
+#        - /tmp:/tmp
+#        cap_add:
+#        - SYS_NICE
+#        entrypoint: ""
+#        command: "nice -n -7 /usr/bin/video-qsv-h264-encoder --cid=100 --name=axis-out.i420 --width=1280 --height=720 --id=0 --bitrate=3000 --crop.x=320 --crop.y=120 --crop.width=640 --crop.height=480 --downsample=3"
 
     # Axis camera including recording functionality with remote start/stop.
  #   dev-camera-axis-in:
@@ -123,6 +123,24 @@ services:
  #       - SYS_NICE
  #       entrypoint: ""
  #       command: "nice -n -8 /usr/bin/opendlv-device-camera-mjpegoverhttp --url=http://10.40.42.50/axis-cgi/mjpg/video.cgi\\?channel=0\\&.mjpg --width=640 --height=480 --name.i420=axis-in.i420 --name.argb=axis-in.argb --remote --recsuffix=-axis-in-jpeg --cid=101 --id=1"
+
+#    qsv-h264-thumbnail-axis-in:
+#        container_name: qsv-h264-thumbnail-axis-in
+#        image: chrberger/video-qsv-h264-encoder:v0.0.4
+#        depends_on:
+#        - dev-camera-axis-in
+#        cpuset: "3"
+#        devices:
+#        - /dev/dri/renderD128
+#        restart: always
+#        network_mode: "host"
+#        ipc: "host"
+#        volumes:
+#        - /tmp:/tmp
+#        cap_add:
+#        - SYS_NICE
+#        entrypoint: ""
+#        command: "nice -n -7 /usr/bin/video-qsv-h264-encoder --cid=100 --name=axis-in.i420 --width=640 --height=480 --id=1 --bitrate=3000 --downsample=3"
 
     # Volvo Angle Sensor using lab jack
 #    dev-io-ue9-amd64:
@@ -144,7 +162,7 @@ services:
         cap_add:
         - SYS_NICE
         entrypoint: ""
-        command: "nice -n -8 --can=can0 --cid=101 --id=1"
+        command: "nice -n -8 /usr/bin/opendlv-device-cangw-rhino --can=can0 --cid=101 --id=1"
         
     # PS3 controller
 #    dev-ps3controller:
