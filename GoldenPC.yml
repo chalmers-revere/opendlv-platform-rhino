@@ -18,7 +18,7 @@ services:
         - SYS_NICE
         entrypoint: ""
         command: "nice -n -7 /usr/bin/cluon-relay --cid-from=101 --cid-to=100 --downsample=19:10,49:1,1046:10"
-
+     
     # Relay cluon.data.RecorderCommand.
     relay-recordercommand-actuationrequest-100-101:
         container_name: relay-recordercommand-actuationrequest-100-101
@@ -43,7 +43,8 @@ services:
         - $HOME/recordings:/recordings
         working_dir: /recordings
         command: "--cid=101 --remote --recsuffix=-all"
-
+    
+    ###########################################################################
     # OxTS GPS (10.40.40.56)
     dev-gps-ncom:
         container_name: dev-gps-ncom
@@ -55,7 +56,8 @@ services:
         - SYS_NICE
         entrypoint: ""
         command: "nice -n -5 /usr/bin/opendlv-device-gps-ncom --ncom_ip=0.0.0.0 --ncom_port=3000 --cid=101 --id=0"
-
+    
+    ############################################################################
     # Velodyne VLP32c Lidar
     dev-lidar-vlp32c:
         container_name: dev-lidar-vlp32c
@@ -68,6 +70,7 @@ services:
         entrypoint: ""
         command: "nice -n -5 /usr/bin/opendlv-device-lidar-vlp32c --vlp32c_ip=10.40.40.1 --vlp32c_port=2368  --cid=101 --id=0"
 
+    ###########################################################################
     # Axis camera including recording functionality with remote start/stop.
     dev-camera-axis-out:
         container_name: dev-camera-axis-out
@@ -86,7 +89,7 @@ services:
         - SYS_NICE
         entrypoint: ""
         command: "nice -n -8 /usr/bin/opendlv-device-camera-mjpegoverhttp --url=http://10.40.41.50/axis-cgi/mjpg/video.cgi\\?channel=0\\&.mjpg --width=1280 --height=720 --name.i420=axis-out.i420 --name.argb=axis-out.argb --remote --recsuffix=-axis-out-jpeg --cid=101 --id=0"
-
+    
     qsv-h264-thumbnail-axis-out:
         container_name: qsv-h264-thumbnail-axis-out
         image: chrberger/video-qsv-h264-encoder:v0.0.4
@@ -105,6 +108,7 @@ services:
         entrypoint: ""
         command: "nice -n -7 /usr/bin/video-qsv-h264-encoder --name=axis-out.i420 --width=1280 --height=720 --bitrate=3000 --crop.x=320 --crop.y=120 --crop.width=640 --crop.height=480 --downsample=3 --cid=100 --id=0"
 
+    ############################################################################
     # Axis camera including recording functionality with remote start/stop.
     dev-camera-axis-in:
         container_name: dev-camera-axis-in
@@ -141,7 +145,8 @@ services:
         - SYS_NICE
         entrypoint: ""
         command: "nice -n -7 /usr/bin/video-qsv-h264-encoder --name=axis-in.i420 --width=1280 --height=720 --bitrate=3000 --crop.x=320 --crop.y=120 --crop.width=640 --crop.height=480 --downsample=3 --cid=100 --id=1"
-
+    
+    ############################################################################
     # Volvo Angle Sensor using lab jack
 #    dev-io-ue9-amd64:
 #        container_name: dev-io-ue9-amd64
@@ -150,6 +155,7 @@ services:
 #        network_mode: "host"
 #        command: "opendlv-device-io-ue9 --ip=10.40.40.101 --cid=100 --verbose"
 
+    ############################################################################
     # CAN interface to access Rhino
     # if write privileges are needed add '--enablethrottle --enablebrake --enablesteering' to command line    
     opendlv-cangw-rhino:
@@ -165,6 +171,7 @@ services:
         command: "nice -n -8 /usr/bin/opendlv-device-cangw-rhino --can=can0 --cid=101 --id=1"
 #        command: "nice -n -8 /usr/bin/opendlv-device-cangw-rhino --can=can0 --enablethrottle --enablebrake --enablesteering --cid=101 --id=1"
 
+    ############################################################################
     # PS3 controller
 #    dev-ps3controller:
 #        container_name: dev-ps3controller
@@ -186,7 +193,8 @@ services:
 #        command: "--device=/dev/input/js0 --axis_leftright=0 --axis_updown=4 --freq=100 --acc_min=0 --acc_max=50 --dec_min=0 --dec_max=-10 --steering_min=-10 --steering_max=10 --steering_max_rate=5.0 --cid=101"
 
 ######## NOTE: To make steering sluggish, reduce steering_max_rate i.e. 0 < steering_max_rate < 2  
-
+    
+    ############################################################################
     # Web-application for viewing vehicle data.
     vehicle-view:
         container_name: opendlv-vehicle-view
