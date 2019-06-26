@@ -17,13 +17,8 @@ services:
         cap_add:
         - SYS_NICE
         entrypoint: ""
-<<<<<<< HEAD
         command: "nice -n -7 /usr/bin/cluon-relay --cid-from=101 --cid-to=100 --downsample=19:10,49:1,1046:10,51:1"
-
-=======
-        command: "nice -n -7 /usr/bin/cluon-relay --cid-from=101 --cid-to=100 --downsample=19:10,49:1,1046:10"
      
->>>>>>> d1958591d5e80481c98805cb08736b6e06e190b1
     # Relay cluon.data.RecorderCommand.
     relay-recordercommand-actuationrequest-100-101:
         container_name: relay-recordercommand-actuationrequest-100-101
@@ -176,7 +171,6 @@ services:
         command: "nice -n -8 /usr/bin/opendlv-device-cangw-rhino --can=can0 --cid=101 --id=1"
 #        command: "nice -n -8 /usr/bin/opendlv-device-cangw-rhino --can=can0 --enablethrottle --enablebrake --enablesteering --cid=101 --id=1"
 
-<<<<<<< HEAD
     opendlv-device-can-raw:
         container_name: opendlv-device-can-raw
         image: chalmersrevere/opendlv-device-can-raw-multi:v0.0.2
@@ -190,9 +184,7 @@ services:
         command: "--can=can1 --cid=101 --id=1"
         
         
-=======
     ############################################################################
->>>>>>> d1958591d5e80481c98805cb08736b6e06e190b1
     # PS3 controller
 #    dev-ps3controller:
 #        container_name: dev-ps3controller
