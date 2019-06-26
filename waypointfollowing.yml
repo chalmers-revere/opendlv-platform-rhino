@@ -1,0 +1,170 @@
+version: '2'
+
+services:
+######################################################################################
+#
+# Microservices for RHINO (Volvo FH16).
+#
+######################################################################################
+
+    # Relay and downsample Envelopes from CID 111 (local CID session on Brick) to CID 110 (for opendlv-vehicle-view).
+    relay-downsample-101-100:
+        container_name: relay-downsample-101-100
+        image: chrberger/cluon-relay-multi:v0.0.4
+        cpuset: "0"
+        restart: always
+        network_mode: "host"
+        cap_add:
+        - SYS_NICE
+        entrypoint: ""
+        command: "nice -n -7 /usr/bin/cluon-relay --cid-from=101 --cid-to=100 --downsample=19:10,49:1,1046:10,51:1"
+     
+    # Relay cluon.data.RecorderCommand.
+    relay-recordercommand-actuationrequest-100-101:
+        container_name: relay-recordercommand-actuationrequest-100-101
+        image: chrberger/cluon-relay-multi:v0.0.4
+        cpuset: "0"
+        restart: always
+        network_mode: "host"
+        cap_add:
+        - SYS_NICE
+        entrypoint: ""
+        command: "nice -n -7 /usr/bin/cluon-relay --cid-from=100 --cid-to=101 --keep=11,160"
+
+    ###########################################################################
+    # Dump all containers from CID 101 on request.
+    record-101:
+        container_name: record-101
+        image: chrberger/cluon-record-multi:v0.0.1
+        cpuset: "0"
+        restart: always
+        network_mode: "host"
+        volumes:
+        - $HOME/recordings:/recordings
+        working_dir: /recordings
+        command: "--cid=101 --remote --recsuffix=-all"
+    
+    ###########################################################################
+    # OxTS GPS (10.40.40.56)
+    dev-gps-ncom:
+        container_name: dev-gps-ncom
+        image: chalmersrevere/opendlv-device-gps-ncom-multi:v0.0.17
+        cpuset: "1"
+        restart: always
+        network_mode: "host"
+        cap_add:
+        - SYS_NICE
+        entrypoint: ""
+        command: "nice -n -5 /usr/bin/opendlv-device-gps-ncom --ncom_ip=0.0.0.0 --ncom_port=3000 --cid=101 --id=0"
+    
+    ############################################################################
+    # Velodyne VLP32c Lidar
+    dev-lidar-vlp32c:
+        container_name: dev-lidar-vlp32c
+        image: chalmersrevere/opendlv-device-lidar-vlp32c-multi:v0.0.3
+        cpuset: "1"
+        restart: always
+        network_mode: "host"
+        cap_add:
+        - SYS_NICE
+        entrypoint: ""
+        command: "nice -n -5 /usr/bin/opendlv-device-lidar-vlp32c --vlp32c_ip=10.40.40.1 --vlp32c_port=2368  --cid=101 --id=0"
+
+    ###########################################################################
+    # Axis camera including recording functionality with remote start/stop.
+    dev-camera-axis-out:
+        container_name: dev-camera-axis-out
+        image: chalmersrevere/opendlv-device-camera-mjpegoverhttp-multi:v0.0.2
+        cpuset: "2"
+        restart: always
+        ipc: "host"
+        network_mode: "host"
+        environment:
+        - DISPLAY=$DISPLAY
+        volumes:
+        - /tmp:/tmp
+        - $HOME/recordings:/recordings
+        working_dir: /recordings
+        cap_add:
+        - SYS_NICE
+        entrypoint: ""
+        command: "nice -n -8 /usr/bin/opendlv-device-camera-mjpegoverhttp --url=http://10.40.41.50/axis-cgi/mjpg/video.cgi\\?channel=0\\&.mjpg --width=1280 --height=720 --name.i420=axis-out.i420 --name.argb=axis-out.argb --remote --recsuffix=-axis-out-jpeg --cid=101 --id=0"
+    
+    qsv-h264-thumbnail-axis-out:
+        container_name: qsv-h264-thumbnail-axis-out
+        image: chrberger/video-qsv-h264-encoder:v0.0.4
+        depends_on:
+        - dev-camera-axis-out
+        cpuset: "2"
+        devices:
+        - /dev/dri/renderD128
+        restart: always
+        network_mode: "host"
+        ipc: "host"
+        volumes:
+        - /tmp:/tmp
+        cap_add:
+        - SYS_NICE
+        entrypoint: ""
+        command: "nice -n -7 /usr/bin/video-qsv-h264-encoder --name=axis-out.i420 --width=1280 --height=720 --bitrate=3000 --crop.x=320 --crop.y=120 --crop.width=640 --crop.height=480 --downsample=3 --cid=100 --id=0"
+
+    ############################################################################
+    # CAN interface to access Rhino
+    # if write privileges are needed add '--enablethrottle --enablebrake --enablesteering' to command line    
+    opendlv-cangw-rhino:
+        container_name: opendlv-cangw-rhino
+        image: chalmersrevere/opendlv-device-cangw-rhino-amd64:v0.0.5
+        cpuset: "1"
+        restart: always
+        network_mode: "host"
+        privileged: true
+        cap_add:
+        - SYS_NICE
+        entrypoint: ""
+#        command: "nice -n -8 /usr/bin/opendlv-device-cangw-rhino --can=can0 --cid=101 --id=1"
+        command: "nice -n -8 /usr/bin/opendlv-device-cangw-rhino --can=can0 --enablethrottle --enablebrake --enablesteering --cid=101 --id=1"
+
+    ############################################################################
+    # PS3 controller
+#    dev-ps3controller:
+#        container_name: dev-ps3controller
+#        image: chalmersrevere/opendlv-device-gamepad-multi:v0.0.10
+#        restart: always
+#        network_mode: "host"
+#        devices:
+#        - "/dev/input/js0:/dev/input/js0"
+#        command: "--device=/dev/input/js0 --axis_leftright=0 --axis_updown=4 --freq=100 --acc_min=0 --acc_max=50 --dec_min=0 --dec_max=-10 --steering_min=-10 --steering_max=10 --steering_max_rate=2.0 --cid=101"
+
+    # PS4 controller 
+#    dev-ps4controller:
+#        container_name: dev-ps4controller
+#        image: chalmersrevere/opendlv-device-gamepad-multi:v0.0.10
+#        restart: always
+#        network_mode: "host"
+#        devices:
+#        - "/dev/input/js0:/dev/input/js0"
+#        command: "--device=/dev/input/js0 --axis_leftright=0 --axis_updown=4 --freq=100 --acc_min=0 --acc_max=50 --dec_min=0 --dec_max=-10 --steering_min=-10 --steering_max=10 --steering_max_rate=5.0 --cid=101"
+
+######## NOTE: To make steering sluggish, reduce steering_max_rate i.e. 0 < steering_max_rate < 2  
+    
+    ############################################################################
+    # Web-application for viewing vehicle data.
+    vehicle-view:
+        container_name: opendlv-vehicle-view
+        image: chalmersrevere/opendlv-vehicle-view-multi:v0.0.60
+        cpuset: "0"
+        restart: always
+        network_mode: "host"
+        volumes:
+        - ~/recordings:/opt/vehicle-view/recordings
+        - /var/run/docker.sock:/var/run/docker.sock
+        environment:
+        - OD4SESSION_CID=100
+        - PLAYBACK_OD4SESSION_CID=200
+        - OPENDLV_VEHICLE_VIEW_PLATFORM=Rhino        
+        ports:
+        - "8081:8081"
+        cap_add:
+        - SYS_NICE
+        entrypoint: ""
+        command: "nice -n -15 node index.js"
