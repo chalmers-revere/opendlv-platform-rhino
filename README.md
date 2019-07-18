@@ -19,7 +19,7 @@ This repository contains information regarding the –
 
 - Research-Specific Equipment/System Architecture
 	- Vehicle CAN Gateway for Control & Vehicle Data
-    - Object Lists
+		- Object Lists
 	- LIDAR: Velodyne VLP32c x 1
 	- GPS-IMU: OxTS RT3003 x 1
 	- Cameras:
