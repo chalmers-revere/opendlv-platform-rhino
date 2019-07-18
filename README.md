@@ -28,7 +28,7 @@ This repository contains information regarding the –
 	- Chassis IMU x 3 (in process)
 	- Computing HW for data processing and logging
 	- Timesync HW: Meinberg M500 (PTP)
-	- Dedicated on-board power supply: Mastervolt
+	- Dedicated on-board power supply
 
 ***OS configuration for the system (opendlv.os):***
 
