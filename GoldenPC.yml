@@ -45,7 +45,7 @@ services:
         command: "--cid=101 --remote --recsuffix=-all"
     
     ###########################################################################
-    # OxTS GPS (10.40.40.56)
+    # OxTS GPS (10.40.40.70)
     dev-gps-ncom:
         container_name: dev-gps-ncom
         image: chalmersrevere/opendlv-device-gps-ncom-multi:v0.0.17
