@@ -45,7 +45,7 @@ services:
         command: "--cid=101 --remote --recsuffix=-all"
     
     ###########################################################################
-    # OxTS GPS (10.40.40.56)
+    # OxTS GPS (10.40.40.80)
     dev-gps-ncom:
         container_name: dev-gps-ncom
         image: chalmersrevere/opendlv-device-gps-ncom-multi:v0.0.17
@@ -171,19 +171,18 @@ services:
         command: "nice -n -8 /usr/bin/opendlv-device-cangw-rhino --can=can0 --cid=101 --id=1"
 #        command: "nice -n -8 /usr/bin/opendlv-device-cangw-rhino --can=can0 --enablethrottle --enablebrake --enablesteering --cid=101 --id=1"
 
-    opendlv-device-can-raw:
-        container_name: opendlv-device-can-raw
-        image: chalmersrevere/opendlv-device-can-raw-multi:v0.0.2
-        cpuset: "1"
-        restart: always
-        network_mode: "host"
-        privileged: true
-        cap_add:
-        - SYS_NICE
+#    opendlv-device-can-raw:
+#        container_name: opendlv-device-can-raw
+#        image: chalmersrevere/opendlv-device-can-raw-multi:v0.0.2
+#        cpuset: "1"
+#        restart: always
+#        network_mode: "host"
+#        privileged: true
+#        cap_add:
+#        - SYS_NICE
 #        entrypoint: ""
-        command: "--can=can1 --cid=101 --id=1"
-        
-        
+#        command: "--can=can1 --cid=101 --id=1"
+
     ############################################################################
     # PS3 controller
 #    dev-ps3controller:
