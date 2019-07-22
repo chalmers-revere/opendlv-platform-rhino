@@ -36,7 +36,7 @@ Refer to [computer/revere-rhino-x86_64-1](https://github.com/chalmers-revere/ope
 
 ***Network Architecture:***
 
-Refer to [To be uploaded]
+Refer to [RhinoNetworkArchitecture_20190722.pdf](https://github.com/chalmers-revere/opendlv-platform-rhino/blob/master/RhinoNetworkArchitecture_20190722.pdf)
 
 ***Software stack for deployment:***
 
