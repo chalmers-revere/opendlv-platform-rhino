@@ -45,7 +45,7 @@ services:
         command: "--cid=101 --remote --recsuffix=-all"
     
     ###########################################################################
-    # OxTS GPS (10.40.40.80)
+    # OxTS GPS (10.40.40.56)
     dev-gps-ncom:
         container_name: dev-gps-ncom
         image: chalmersrevere/opendlv-device-gps-ncom-multi:v0.0.17
@@ -109,53 +109,6 @@ services:
         command: "nice -n -7 /usr/bin/video-qsv-h264-encoder --name=axis-out.i420 --width=1280 --height=720 --bitrate=3000 --crop.x=320 --crop.y=120 --crop.width=640 --crop.height=480 --downsample=3 --cid=100 --id=0"
 
     ############################################################################
-    # Axis camera including recording functionality with remote start/stop.
-    dev-camera-axis-in:
-        container_name: dev-camera-axis-in
-        image: chalmersrevere/opendlv-device-camera-mjpegoverhttp-multi:v0.0.2
-        cpuset: "3"
-        restart: always
-        ipc: "host"
-        network_mode: "host"
-        environment:
-        - DISPLAY=$DISPLAY
-        volumes:
-        - /tmp:/tmp
-        - $HOME/recordings:/recordings
-        working_dir: /recordings
-        cap_add:
-        - SYS_NICE
-        entrypoint: ""
-        command: "nice -n -8 /usr/bin/opendlv-device-camera-mjpegoverhttp --url=http://10.40.42.50/axis-cgi/mjpg/video.cgi\\?channel=0\\&.mjpg --width=1280 --height=720 --name.i420=axis-in.i420 --name.argb=axis-in.argb --remote --recsuffix=-axis-in-jpeg --cid=101 --id=1"
-
-    qsv-h264-thumbnail-axis-in:
-        container_name: qsv-h264-thumbnail-axis-in
-        image: chrberger/video-qsv-h264-encoder:v0.0.4
-        depends_on:
-        - dev-camera-axis-in
-        cpuset: "3"
-        devices:
-        - /dev/dri/renderD128
-        restart: always
-        network_mode: "host"
-        ipc: "host"
-        volumes:
-        - /tmp:/tmp
-        cap_add:
-        - SYS_NICE
-        entrypoint: ""
-        command: "nice -n -7 /usr/bin/video-qsv-h264-encoder --name=axis-in.i420 --width=1280 --height=720 --bitrate=3000 --crop.x=320 --crop.y=120 --crop.width=640 --crop.height=480 --downsample=3 --cid=100 --id=1"
-    
-    ############################################################################
-    # Volvo Angle Sensor using lab jack
-#    dev-io-ue9-amd64:
-#        container_name: dev-io-ue9-amd64
-#        image: olbender/opendlv-device-io-ue9-amd64:v0.0.1
-#        restart: always
-#        network_mode: "host"
-#        command: "opendlv-device-io-ue9 --ip=10.40.40.101 --cid=100 --verbose"
-
-    ############################################################################
     # CAN interface to access Rhino
     # if write privileges are needed add '--enablethrottle --enablebrake --enablesteering' to command line    
     opendlv-cangw-rhino:
@@ -168,20 +121,8 @@ services:
         cap_add:
         - SYS_NICE
         entrypoint: ""
-        command: "nice -n -8 /usr/bin/opendlv-device-cangw-rhino --can=can0 --cid=101 --id=1"
-#        command: "nice -n -8 /usr/bin/opendlv-device-cangw-rhino --can=can0 --enablethrottle --enablebrake --enablesteering --cid=101 --id=1"
-
-#    opendlv-device-can-raw:
-#        container_name: opendlv-device-can-raw
-#        image: chalmersrevere/opendlv-device-can-raw-multi:v0.0.2
-#        cpuset: "1"
-#        restart: always
-#        network_mode: "host"
-#        privileged: true
-#        cap_add:
-#        - SYS_NICE
-#        entrypoint: ""
-#        command: "--can=can1 --cid=101 --id=1"
+#        command: "nice -n -8 /usr/bin/opendlv-device-cangw-rhino --can=can0 --cid=101 --id=1"
+        command: "nice -n -8 /usr/bin/opendlv-device-cangw-rhino --can=can0 --enablethrottle --enablebrake --enablesteering --cid=101 --id=1"
 
     ############################################################################
     # PS3 controller
@@ -227,20 +168,3 @@ services:
         - SYS_NICE
         entrypoint: ""
         command: "nice -n -15 node index.js"
-
-######################################################################################
-#
-# Other Microservices.
-#
-######################################################################################
-
-    # Trimble GPS (check IP)
-#    dev-gps-nmea:
-#        container_name: dev-gps-nmea
-#        image: chalmersrevere/opendlv-device-gps-nmea-multi:v0.0.13
-#        restart: always
-#        network_mode: "host"
-#        cap_add:
-#        - SYS_NICE
-#        entrypoint: ""
-#        command: "nice -n -3 /usr/bin/opendlv-device-gps-nmea --nmea_ip=10.40.40.X --nmea_port=9999 --cid=101 --id=1"    
