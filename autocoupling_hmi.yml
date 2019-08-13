@@ -1,0 +1,64 @@
+version: '2'
+
+services:
+######################################################################################
+#
+# Microservices for RHINO (Volvo FH16).
+#
+######################################################################################
+
+    # CAN Data from Jost KingPin.
+    opendlv-device-cangw-jost:
+        container_name: opendlv-device-cangw-jost
+        image: opendlv-device-cangw-jost:v0.0.2
+        restart: always
+        network_mode: "host"
+        cap_add:
+        - SYS_NICE
+        entrypoint: ""
+        command: "nice -n -7 --can=can1 --cid=101"
+
+    ###########################################################################    
+    # Cluon Display CPP.
+    cluon-jost-display-cpp:
+        container_name: cluon-jost-display-cpp
+        image: cluon-jost-display-cpp:v0.0.1
+        restart: always
+        network_mode: "host"
+        cap_add:
+        - SYS_NICE
+        entrypoint: ""
+        command: "nice -n -7 --cid=101"
+
+    # Cluon HMI Javascript (JS).
+    cluon-jost-display-js:
+        container_name: cluon-jost-display-js
+        image: cluon-jost-display-js:v0.0.2
+        restart: always
+        network_mode: "host"
+        cap_add:
+        - SYS_NICE
+        entrypoint: ""
+        command: "nice -n -7 --cid=101"
+    
+    ############################################################################
+    # Web-application for viewing vehicle data.
+    vehicle-view:
+        container_name: opendlv-vehicle-view
+        image: chalmersrevere/opendlv-vehicle-view-multi:v0.0.60
+        cpuset: "0"
+        restart: always
+        network_mode: "host"
+        volumes:
+        - ~/recordings:/opt/vehicle-view/recordings
+        - /var/run/docker.sock:/var/run/docker.sock
+        environment:
+        - OD4SESSION_CID=100
+        - PLAYBACK_OD4SESSION_CID=200
+        - OPENDLV_VEHICLE_VIEW_PLATFORM=Rhino        
+        ports:
+        - "8081:8081"
+        cap_add:
+        - SYS_NICE
+        entrypoint: ""
+        command: "nice -n -15 node index.js"
