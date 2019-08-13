@@ -14,24 +14,24 @@ services:
         restart: always
         network_mode: "host"
         privileged: true
-        command: "--can=can1 --cid=101"
+        command: "--can=can1 --cid=100"
 
     ###########################################################################    
     # Cluon Display CPP.
     cluon-jost-display:
         container_name: cluon-jost-display
-        image: cluon-jost-display:v0.0.1
+        image: cluon-jost-display:v0.0.2
         restart: always
         network_mode: "host"
-        command: "--cid=101"
+        command: "--cid=100"
 
     # Cluon HMI Javascript (JS).
     cluon-jost-display-js:
         container_name: cluon-jost-display-js
-        image: cluon-jost-display-js:v0.0.2
+        image: cluon-jost-display-js:v0.0.3
         restart: always
         network_mode: "host"
-        command: "--cid=101"
+        command: "--cid=100"
     
     ############################################################################
     # Web-application for viewing vehicle data.
