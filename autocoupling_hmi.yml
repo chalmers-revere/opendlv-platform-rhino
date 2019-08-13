@@ -13,10 +13,8 @@ services:
         image: opendlv-device-cangw-jost:v0.0.2
         restart: always
         network_mode: "host"
-        cap_add:
-        - SYS_NICE
-        entrypoint: ""
-        command: "nice -n -7 --can=can1 --cid=101"
+        privileged: true
+        command: "--can=can1 --cid=101"
 
     ###########################################################################    
     # Cluon Display CPP.
@@ -25,10 +23,7 @@ services:
         image: cluon-jost-display-cpp:v0.0.1
         restart: always
         network_mode: "host"
-        cap_add:
-        - SYS_NICE
-        entrypoint: ""
-        command: "nice -n -7 --cid=101"
+        command: "--cid=101"
 
     # Cluon HMI Javascript (JS).
     cluon-jost-display-js:
@@ -36,10 +31,7 @@ services:
         image: cluon-jost-display-js:v0.0.2
         restart: always
         network_mode: "host"
-        cap_add:
-        - SYS_NICE
-        entrypoint: ""
-        command: "nice -n -7 --cid=101"
+        command: "--cid=101"
     
     ############################################################################
     # Web-application for viewing vehicle data.
