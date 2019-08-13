@@ -19,8 +19,8 @@ services:
     ###########################################################################    
     # Cluon Display CPP.
     cluon-jost-display-cpp:
-        container_name: cluon-jost-display-cpp
-        image: cluon-jost-display-cpp:v0.0.1
+        container_name: cluon-jost-display
+        image: cluon-jost-display:v0.0.1
         restart: always
         network_mode: "host"
         command: "--cid=101"
