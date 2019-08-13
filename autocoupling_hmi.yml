@@ -18,7 +18,7 @@ services:
 
     ###########################################################################    
     # Cluon Display CPP.
-    cluon-jost-display-cpp:
+    cluon-jost-display:
         container_name: cluon-jost-display
         image: cluon-jost-display:v0.0.1
         restart: always
