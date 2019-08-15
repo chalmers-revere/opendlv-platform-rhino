@@ -11,8 +11,9 @@ hdd=/dev/`lsblk | grep disk | grep 111.8G | cut -d ' ' -f1`
 wget https://raw.github.com/chalmers-revere/opendlv.os/master/x86/get.sh
 sh get.sh
 
-cp setup-available/setup-chroot-01-rtkernel.sh \
-   setup-available/setup-chroot-02-ptpd.sh \
+# Disabling rt-kernel due to missing sensor driver to monitor CPU temp.
+# cp setup-available/setup-chroot-01-rtkernel.sh \
+cp setup-available/setup-chroot-02-ptpd.sh \
    setup-available/setup-post-01-router.sh \
    setup-available/setup-post-05-docker.sh \
    setup-available/setup-post-09-socketcan.sh \
@@ -42,8 +43,8 @@ sed_arg="s/subnet=.*/subnet=10.40.40.0/; \
 	  'oxts-gps,70:b3:d5:af:03:73,80', )/"
 sed -i "$sed_arg" setup-post-01-router.sh
 
-sed_arg="s/dev=.*/dev=( can0 )/; \
-       	s/bitrate=.*/bitrate=( 250000 )/"
+sed_arg="s/dev=.*/dev=( can0 can1 )/; \
+       	s/bitrate=.*/bitrate=( 250000 125000 )/"
 sed -i "$sed_arg" setup-post-09-socketcan.sh
 
 chmod +x *.sh
