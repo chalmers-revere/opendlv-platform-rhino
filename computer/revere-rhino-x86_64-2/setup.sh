@@ -7,7 +7,7 @@ echo Revere user password?
 read user_password
 
 echo Revere 2.4 GHz Pwd?
-read wifi_245GHz_password
+read wifi_24GHz_password
 
 echo Revere 5 GHz Pwd?
 read wifi_5GHz_password
