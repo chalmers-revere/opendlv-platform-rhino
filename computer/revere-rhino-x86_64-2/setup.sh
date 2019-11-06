@@ -7,10 +7,10 @@ echo Revere user password?
 read user_password
 
 echo Revere 2.4 GHz Pwd?
-read wifi_24GHz_password
+read reverewifi_password
 
 echo Revere 5 GHz Pwd?
-read wifi_5GHz_password
+read reverewifi_password
 
 hdd=/dev/`lsblk | grep disk | grep 119.2G | cut -d ' ' -f1`
 
@@ -30,12 +30,12 @@ sed_arg="s/hostname=.*/hostname=revere-rhino-x86_64-2/; \
   s/user_password=.*/user_password=( ${user_password} )/; \
   s/lan_dev=.*/lan_dev=enp0s20f0u1u4/; \
   s/eth_dhcp_client_dev=.*/eth_dhcp_client_dev=( enp0s20f0u1u4 )/; \
-  s%hdd=.*%hdd=${hdd}%; \
+  s%hdd=.*%hdd=${hdd}%; /"
 sed -i "$sed_arg" install-conf.sh
 
 sed_arg="s/dev=.*/dev=( wlp58s0 )/; \
   s/essid=.*/essid=( "REVERE 2.4GHz" "REVERE 5GHz" "ASTA2" )/; \
-  s/wpa2=.*/wpa2=( ${wifi_24GHz_password} ${wifi_5GHz_password} "pass3" )/; \
+  s/wpa2=.*/wpa2=( ${reverewifi_password} ${reverewifi_password} "pass3" )/;"
 sed -i "$sed_arg" setup-post-03-wan_wifi.sh
 
 chmod +x *.sh
