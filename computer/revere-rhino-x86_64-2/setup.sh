@@ -6,10 +6,7 @@ read root_password
 echo Revere user password?
 read user_password
 
-echo Revere 2.4 GHz Pwd?
-read reverewifi_password
-
-echo Revere 5 GHz Pwd?
+echo Revere WiFi Pwd?
 read reverewifi_password
 
 hdd=/dev/`lsblk | grep disk | grep 119.2G | cut -d ' ' -f1`
